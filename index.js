@@ -1,9 +1,18 @@
+/* global require */ //eslint flagging require remove
+
 var http = require("http");
 var fs = require("fs");
 var extract = require("./extract");
+var mime = require("mime");
+var wss = require("./websockets-server"); // eslint-disable-line no-unused-vars
 
+mime.getType("txt"); // ⇨ 'text/plain'
+mime.getExtension("text/plain"); // ⇨ 'txt'
 var handleError = function(err, res) {
-  res.writeHead(404);
+  res.writeHead(404, {
+    "Content-Type": "text/html"
+  });
+  res.write("<script>location.replace('error.html')</script>");
   res.end();
 };
 
@@ -16,6 +25,7 @@ var server = http.createServer(function(req, res) {
       handleError(err, res);
       return;
     } else {
+      res.setHeader("Content-Type", "text/html");
       res.end(data);
     }
   });

@@ -1,3 +1,6 @@
+/* global require */
+/* global module */
+/* global __dirname */
 var path = require("path");
 var extractFilePath = function(url) {
   var filePath;
