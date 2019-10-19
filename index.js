@@ -6,8 +6,7 @@ var extract = require("./extract");
 var mime = require("mime");
 var wss = require("./websockets-server"); // eslint-disable-line no-unused-vars
 
-mime.getType("txt"); // ⇨ 'text/plain'
-mime.getExtension("text/plain"); // ⇨ 'txt'
+
 var handleError = function(err, res) {
   res.writeHead(404, {
     "Content-Type": "text/html"
@@ -25,7 +24,7 @@ var server = http.createServer(function(req, res) {
       handleError(err, res);
       return;
     } else {
-      res.setHeader("Content-Type", "text/html");
+      res.setHeader("Content-Type", mime.getType(req.url));
       res.end(data);
     }
   });
